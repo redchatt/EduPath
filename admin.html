@@ -2,113 +2,131 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <title>EduPath | İdarəetmə Paneli</title>
+    <title>EduPath | Escobar Admin Control</title>
     <script>
+        // Təhlükəsizlik: Giriş yoxlanışı
         if(localStorage.getItem("escobar_auth") !== "true") window.location.href = "admin-login.html";
     </script>
     <style>
-        :root { --main: #38bdf8; --bg: #0f172a; --card: #1e293b; --red: #ef4444; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; }
-        
+        :root { --main: #38bdf8; --bg: #020617; --card: #0f172a; --red: #f43f5e; --green: #10b981; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: white; display: flex; min-height: 100vh; }
+
         /* Sidebar */
-        .sidebar { width: 260px; background: var(--card); height: 100vh; padding: 25px; position: fixed; border-right: 1px solid #334155; }
-        .sidebar h2 { color: var(--main); margin-bottom: 30px; font-size: 22px; text-align: center; }
-        .menu-btn { width: 100%; padding: 12px; margin: 5px 0; background: transparent; border: none; color: #94a3b8; text-align: left; cursor: pointer; border-radius: 8px; transition: 0.3s; }
-        .menu-btn:hover, .menu-btn.active { background: rgba(56, 189, 248, 0.1); color: var(--main); }
-        .logout { margin-top: auto; color: var(--red); cursor: pointer; padding: 12px; font-weight: bold; position: absolute; bottom: 20px; }
+        .sidebar { width: 280px; background: var(--card); border-right: 1px solid #1e293b; padding: 30px; position: fixed; height: 100vh; }
+        .sidebar h2 { color: var(--main); margin-bottom: 40px; text-align: center; letter-spacing: 2px; }
+        .nav-btn { width: 100%; padding: 15px; margin: 5px 0; border: none; background: transparent; color: #94a3b8; text-align: left; cursor: pointer; border-radius: 10px; transition: 0.3s; }
+        .nav-btn.active, .nav-btn:hover { background: rgba(56, 189, 248, 0.1); color: var(--main); }
 
-        /* Content Area */
-        .main { margin-left: 260px; padding: 40px; width: 100%; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--card); padding: 20px; border-radius: 15px; border-left: 5px solid var(--main); }
+        /* Main Content */
+        .content { margin-left: 280px; padding: 40px; width: calc(100% - 280px); }
+        .top-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card); padding: 25px; border-radius: 20px; border-bottom: 4px solid var(--main); }
+        .stat-card h3 { font-size: 28px; margin-top: 10px; }
+
+        /* Tables & Lists */
+        .section { background: var(--card); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #1e293b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #1e293b; }
+        th { color: var(--main); font-size: 14px; text-transform: uppercase; }
         
-        /* Tables */
-        .table-container { background: var(--card); padding: 20px; border-radius: 20px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #334155; }
-        th { color: var(--main); }
-        .action-btn { padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; margin-right: 5px; }
-        .btn-bal { background: var(--main); color: #000; }
-        .btn-ban { background: #f59e0b; color: #000; }
-        .btn-del { background: var(--red); color: white; }
+        /* Badges & Inputs */
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .badge-green { background: rgba(16, 185, 129, 0.1); color: var(--green); }
+        
+        .input-group { margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 8px; border-radius: 10px; border: 1px solid #334155; background: #020617; color: white; outline: none; }
+        
+        .btn { padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-main { background: var(--main); color: #000; }
+        .btn-red { background: var(--red); color: white; }
+        .btn-green { background: var(--green); color: white; }
 
-        /* Modals (Pop-ups) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--card); padding: 30px; border-radius: 20px; width: 400px; text-align: center; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; background: #0f172a; border: 1px solid #334155; color: white; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--card); padding: 40px; border-radius: 25px; width: 450px; text-align: center; border: 1px solid var(--main); }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>EduPath Admin</h2>
-        <button class="menu-btn active">👤 İstifadəçilər</button>
-        <button class="menu-btn">🏆 Turnir İdarəsi</button>
-        <button class="menu-btn">📚 Kitab & Sınaq</button>
-        <button class="menu-btn">💬 Canlı Dəstək</button>
-        <div class="logout" onclick="logout()">Çıxış Et</div>
+        <h2>ESCOBAR PANEL</h2>
+        <button class="nav-btn active">👥 İstifadəçilər</button>
+        <button class="nav-btn">🏆 Turnir İdarəsi</button>
+        <button class="nav-btn">📝 Sınaq Əlavə Et</button>
+        <button class="nav-btn">📚 Kitab Yüklə</button>
+        <button class="nav-btn">💬 Canlı Dəstək (3)</button>
+        <button class="nav-btn" onclick="logout()" style="color: var(--red); margin-top: 50px;">🚪 Çıxış</button>
     </div>
 
-    <div class="main">
-        <div class="header">
-            <h1>Xoş gəldin, Escobar!</h1>
-            <div id="time" style="color: var(--main);"></div>
+    <div class="content">
+        <div class="top-stats">
+            <div class="stat-card"><p>Cəmi Tələbə</p><h3>1,420</h3></div>
+            <div class="stat-card" style="border-color: var(--green);"><p>Ümumi Balans</p><h3>8,450 AZN</h3></div>
+            <div class="stat-card" style="border-color: #f59e0b;"><p>Aktiv Turnir</p><h3>1 CANLI</h3></div>
+            <div class="stat-card" style="border-color: var(--red);"><p>Gözləyən Mesaj</p><h3>3</h3></div>
         </div>
 
-        <div class="stat-grid">
-            <div class="stat-card"><h4>Tələbələr</h4><h3>1,200</h3></div>
-            <div class="stat-card"><h4>Ümumi Qazanc</h4><h3>4,500 AZN</h3></div>
-            <div class="stat-card"><h4>Canlı Mesaj</h4><h3>3 Yeni</h3></div>
-            <div class="stat-card" style="border-color: #f59e0b;"><h4>Aktiv Turnir</h4><h3>Həftəlik</h3></div>
-        </div>
-
-        <div class="table-container">
-            <h3>İstifadəçi İdarəetmə Paneli</h3>
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>İstifadəçi Siyahısı və İdarəetmə</h3>
+                <button class="btn btn-green">+ Yeni Tələbə</button>
+            </div>
             <table>
                 <thead>
                     <tr>
                         <th>Tələbə</th>
-                        <th>Email</th>
-                        <th>Şifrə</th>
+                        <th>Email / Şifrə</th>
                         <th>Balans</th>
+                        <th>Status</th>
                         <th>Əməliyyatlar</th>
                     </tr>
                 </thead>
-                <tbody id="user-table">
+                <tbody id="userList">
                     <tr>
-                        <td>Əli Xan</td>
-                        <td>ali@mail.com</td>
-                        <td><span style="filter:blur(4px)">123456</span></td>
-                        <td style="color: #22c55e;">25.00 AZN</td>
+                        <td><b>Vüsal Həsənov</b></td>
+                        <td>vusal@mail.com / <small style="color: var(--main)">vusal1998</small></td>
+                        <td id="user-bal-1"><b style="color: var(--green)">45.50 AZN</b></td>
+                        <td><span class="badge badge-green">AKTİV</span></td>
                         <td>
-                            <button class="action-btn btn-bal" onclick="openModal('balModal')">+/- Balans</button>
-                            <button class="action-btn btn-ban" onclick="alert('Banlandı!')">Banla</button>
-                            <button class="action-btn btn-del" onclick="this.parentElement.parentElement.remove()">Sil</button>
+                            <button class="btn btn-main" style="padding: 5px 10px;" onclick="openBalModal(1, 'Vüsal Həsənov')">Balans +/-</button>
+                            <button class="btn btn-red" style="padding: 5px 10px;" onclick="banUser(this)">Ban</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Leyla Quliyeva</b></td>
+                        <td>leyla@mail.com / <small style="color: var(--main)">leyla000</small></td>
+                        <td id="user-bal-2"><b style="color: var(--green)">12.00 AZN</b></td>
+                        <td><span class="badge badge-green">AKTİV</span></td>
+                        <td>
+                            <button class="btn btn-main" style="padding: 5px 10px;" onclick="openBalModal(2, 'Leyla Quliyeva')">Balans +/-</button>
+                            <button class="btn btn-red" style="padding: 5px 10px;" onclick="banUser(this)">Ban</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="table-container">
-                <h3>🏆 Turnir və Resurslar</h3>
-                <input type="text" placeholder="Turnir/Kitab Adı">
-                <select>
-                    <option>Turnir Aktivləşdir</option>
-                    <option>Sınaq Əlavə Et</option>
-                    <option>Kitab Yüklə (PDF)</option>
-                </select>
-                <button class="action-btn btn-bal" style="width: 100%; padding: 12px; margin-top: 10px;">Sistemə Əlavə Et</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div class="section">
+                <h3>🏆 Turnir Nəzarəti</h3>
+                <div class="input-group">
+                    <label>Turnir Başlığı</label>
+                    <input type="text" id="t-title" placeholder="Məs: Həftəlik Fizika Turniri">
+                </div>
+                <div class="input-group">
+                    <label>Mükafat Fondu (AZN)</label>
+                    <input type="number" id="t-prize" placeholder="Məs: 50">
+                </div>
+                <button class="btn btn-green" style="width: 100%;" onclick="alert('Turnir Aktiv Edildi!')">Turniri Başlat</button>
             </div>
-            <div class="table-container">
-                <h3>💬 Canlı Dəstək Sorğuları</h3>
-                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
-                    <p style="font-size: 12px; color: var(--main);">Tələbə: Vüsal</p>
-                    <p>"Sınaq açılmır, kömək edin."</p>
-                    <input type="text" placeholder="Cavabınız...">
+
+            <div class="section">
+                <h3>💬 Canlı Dəstək (Escobar Chat)</h3>
+                <div style="background: #020617; padding: 15px; border-radius: 10px; border-left: 4px solid var(--main); margin-bottom: 15px;">
+                    <p style="font-size: 12px; color: var(--main);">Tələbə: Əli Məmmədov</p>
+                    <p style="margin: 5px 0;">"Salam Escobar bəy, sınaq nəticəm niyə görünmür?"</p>
+                    <textarea placeholder="Cavabınız..." style="height: 60px;"></textarea>
+                    <button class="btn btn-main" style="margin-top: 10px; width: 100%;">Cavabla</button>
                 </div>
             </div>
         </div>
@@ -116,21 +134,53 @@
 
     <div id="balModal" class="modal">
         <div class="modal-content">
-            <h3>Balansı Tənzimlə</h3>
-            <input type="number" id="balInput" placeholder="Məbləğ (Məs: 10 və ya -5)">
-            <button class="action-btn btn-bal" style="width: 100%; padding: 12px;" onclick="closeModal('balModal')">Təsdiqlə</button>
-            <p style="margin-top: 10px; cursor: pointer;" onclick="closeModal('balModal')">Ləğv et</p>
+            <h2 id="modalUser">İstifadəçi Adı</h2>
+            <p style="margin: 15px 0; opacity: 0.7;">Balansda ediləcək dəyişiklik:</p>
+            <input type="number" id="newBal" placeholder="Məsələn: 10 və ya -5">
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-red" style="flex: 1;" onclick="closeModal()">Ləğv et</button>
+                <button class="btn btn-green" style="flex: 1;" onclick="saveBalance()">Yadda Saxla</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).style.display = "flex"; }
-        function closeModal(id) { 
-            if(id === 'balModal') alert("Əməliyyat uğurla tamamlandı!");
-            document.getElementById(id).style.display = "none"; 
+        let currentUserIdx = null;
+
+        function openBalModal(idx, name) {
+            currentUserIdx = idx;
+            document.getElementById('modalUser').innerText = name;
+            document.getElementById('balModal').style.display = 'flex';
         }
-        function logout() { localStorage.removeItem("escobar_auth"); window.location.href = "admin-login.html"; }
-        setInterval(() => { document.getElementById('time').innerText = new Date().toLocaleTimeString(); }, 1000);
+
+        function closeModal() {
+            document.getElementById('balModal').style.display = 'none';
+        }
+
+        function saveBalance() {
+            let val = parseFloat(document.getElementById('newBal').value);
+            if(!isNaN(val)) {
+                let balEl = document.getElementById('user-bal-' + currentUserIdx);
+                let currentTotal = parseFloat(balEl.innerText);
+                balEl.innerHTML = `<b style="color: var(--green)">${(currentTotal + val).toFixed(2)} AZN</b>`;
+                alert("Balans uğurla yeniləndi!");
+                closeModal();
+            }
+        }
+
+        function banUser(btn) {
+            if(confirm("Bu istifadəçini banlamaq istədiyinizə əminsiniz?")) {
+                let row = btn.parentElement.parentElement;
+                row.style.opacity = '0.3';
+                btn.innerText = "Banlandı";
+                btn.disabled = true;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("escobar_auth");
+            window.location.href = "admin-login.html";
+        }
     </script>
 </body>
 </html>
