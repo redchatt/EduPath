@@ -2,253 +2,114 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPath | Canlı Təhsil Platforması</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <title>EduPath | Giriş və Qeydiyyat</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            background: #020205;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            color: #fff;
-            padding: 20px 0;
-        }
-
-        /* CANLI ARXA FON (Canvas və Parıltılar) */
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-        }
-
-        .glow {
-            position: fixed;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(78, 84, 200, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(50px);
-            animation: pulse 10s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-10%, -10%) scale(1); }
-            100% { transform: translate(20%, 20%) scale(1.2); }
-        }
-
-        /* KONTEYNER */
-        .container {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 45px;
-            border-radius: 35px;
-            width: 90%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            z-index: 10;
-        }
-
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        .logo-area { font-size: 38px; font-weight: bold; background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .floating-book { 
-            font-size: 35px; 
-            animation: fly 3s infinite ease-in-out; 
-        }
-        @keyframes fly { 
-            0%, 100% { transform: translateY(0) rotate(0deg); } 
-            50% { transform: translateY(-15px) rotate(5deg); } 
-        }
-
-        input {
-            width: 100%;
-            padding: 16px 22px;
-            margin: 12px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 16px;
-            transition: 0.4s ease;
-        }
-        input:focus { background: rgba(255, 255, 255, 0.12); border-color: #00d2ff; outline: none; box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
-
-        .btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 20px;
-            background: linear-gradient(45deg, #4e54c8, #00d2ff);
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.4s;
-            margin-top: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(78, 84, 200, 0.6); }
-
-        .links { margin-top: 25px; font-size: 14px; }
-        .links a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 12px; transition: 0.3s; }
-        .links a:hover { color: #00d2ff; }
-
-        /* ALT MƏLUMAT KARTLARI */
-        .bottom-info {
-            width: 90%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin-top: 50px;
-            z-index: 10;
-        }
-        .info-card {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 30px;
-            border-radius: 25px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.4s;
-        }
-        .info-card:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-10px); border-color: #ff416c; }
-        .info-card h3 { color: #ff416c; margin-bottom: 12px; font-size: 18px; }
-        .info-card p { font-size: 14px; opacity: 0.6; line-height: 1.6; }
-
-        .hidden { display: none; }
+        :root { --main: #38bdf8; --bg: #020617; --card: #0f172a; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-card { background: var(--card); padding: 30px; border-radius: 20px; width: 350px; border: 1px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { text-align: center; color: var(--main); margin-bottom: 20px; }
+        .input-group { position: relative; margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background: #020617; color: white; outline: none; }
+        .toggle-pass { position: absolute; right: 10px; top: 12px; cursor: pointer; color: var(--main); font-size: 18px; }
+        button { width: 100%; padding: 12px; background: var(--main); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { opacity: 0.8; }
+        .switch { text-align: center; margin-top: 15px; font-size: 13px; cursor: pointer; color: #94a3b8; }
+        .switch b { color: var(--main); }
+        .error { color: #f43f5e; font-size: 12px; text-align: center; display: none; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-<div class="glow" style="top: -10%; left: -10%;"></div>
-<div class="glow" style="bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(255, 65, 108, 0.1) 0%, transparent 70%);"></div>
-
-<div class="container" id="login-box">
-    <div class="logo-wrapper">
-        <div class="logo-area">EduPath</div>
-        <span class="floating-book">📖</span>
+<div class="auth-card" id="loginBox">
+    <h2>GİRİŞ ET</h2>
+    <div class="input-group">
+        <input type="email" id="lEmail" placeholder="Email ünvanı">
     </div>
-    <p style="opacity: 0.5; font-size: 15px; margin-bottom: 30px;">Gələcəyin təhsil mərkəzinə daxil ol</p>
-
-    <input type="email" placeholder="E-poçt">
-    <input type="password" placeholder="Şifrə">
-    <button class="btn">Daxil Ol</button>
-    
-    <div class="links">
-        <a href="#" onclick="show('forgot-box')">Şifrə bərpası</a>
-        <a href="#" onclick="show('reg-box')">Yeni hesab</a>
+    <div class="input-group">
+        <input type="password" id="lPass" placeholder="Şifrə">
+        <span class="toggle-pass" onclick="toggleView('lPass')">👁️</span>
     </div>
+    <button onclick="login()">DAXİL OL</button>
+    <p id="lErr" class="error">Məlumatlar yanlışdır və ya istifadəçi yoxdur!</p>
+    <p class="switch" onclick="swap()">Hesabın yoxdur? <b>Qeydiyyatdan keç</b></p>
 </div>
 
-<div class="container hidden" id="reg-box">
-    <div class="logo-area">Qeydiyyat</div>
-    <input type="text" placeholder="Ad Soyad">
-    <input type="email" placeholder="E-poçt">
-    <input type="password" id="p1" placeholder="Şifrə (Min. 8 simvol)">
-    <input type="password" id="p2" placeholder="Şifrəni təkrarla">
-    <button class="btn" onclick="validate()">Hesabı Yarat</button>
-    <div class="links"><a href="#" onclick="show('login-box')">Geri</a></div>
-</div>
-
-<div class="container hidden" id="forgot-box">
-    <div class="logo-area">Bərpa</div>
-    <p style="font-size: 14px; margin: 10px 0;">E-poçtunuzu daxil edin</p>
-    <input type="email" placeholder="E-poçt ünvanı">
-    <button class="btn">Kodu Göndər</button>
-    <div class="links"><a href="#" onclick="show('login-box')">Geri</a></div>
-</div>
-
-<div class="bottom-info">
-    <div class="info-card"><h3>🚀 Sınaqlar</h3><p>Hər həftə sonu özünüzü sınayın.</p></div>
-    <div class="info-card"><h3>🏆 Turnirlər</h3><p>Bilik yarışlarında qalib gəlin.</p></div>
-    <div class="info-card"><h3>📚 Kitabxana</h3><p>Minlərlə vəsait pulsuz istifadədə.</p></div>
-    <div class="info-card"><h3>💬 Dəstək</h3><p>Müəllimlərlə 24/7 birbaşa əlaqə.</p></div>
+<div class="auth-card" id="regBox" style="display: none;">
+    <h2>QEYDİYYAT</h2>
+    <div class="input-group">
+        <input type="text" id="rName" placeholder="Ad Soyad">
+    </div>
+    <div class="input-group">
+        <input type="email" id="rEmail" placeholder="Email ünvanı">
+    </div>
+    <div class="input-group">
+        <input type="password" id="rPass" placeholder="Şifrə">
+        <span class="toggle-pass" onclick="toggleView('rPass')">👁️</span>
+    </div>
+    <button onclick="register()">HESAB YARAT</button>
+    <p class="switch" onclick="swap()">Artıq hesabın var? <b>Giriş et</b></p>
 </div>
 
 <script>
-    // ARXA FON ÜÇÜN CANLI "STAR MESH" SİSTEMİ
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+    // Şifrəni göstər/gizlə
+    function toggleView(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
 
-    function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        particles = [];
-        for (let i = 0; i < 80; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                size: Math.random() * 2
-            });
+    // Səhifələri dəyiş (Login/Reg)
+    function swap() {
+        const l = document.getElementById('loginBox');
+        const r = document.getElementById('regBox');
+        l.style.display = l.style.display === 'none' ? 'block' : 'none';
+        r.style.display = r.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // QEYDİYYAT FUNKSİYASI
+    function register() {
+        const name = document.getElementById('rName').value;
+        const email = document.getElementById('rEmail').value;
+        const pass = document.getElementById('rPass').value;
+
+        if (name && email && pass) {
+            let users = JSON.parse(localStorage.getItem("edu_users")) || [];
+            
+            // Email-in olub olmadığını yoxla
+            if(users.some(u => u.email === email)) {
+                alert("Bu email artıq qeydiyyatdan keçib!");
+                return;
+            }
+
+            users.push({ name, email, pass, balance: 0, isBanned: false });
+            localStorage.setItem("edu_users", JSON.stringify(users));
+            alert("Qeydiyyat uğurludur! İndi giriş edə bilərsiniz.");
+            swap();
+        } else {
+            alert("Bütün xanaları doldurun!");
         }
     }
 
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+    // GİRİŞ FUNKSİYASI
+    function login() {
+        const email = document.getElementById('lEmail').value;
+        const pass = document.getElementById('lPass').value;
+        const err = document.getElementById('lErr');
 
-        particles.forEach((p, i) => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        let users = JSON.parse(localStorage.getItem("edu_users")) || [];
+        const user = users.find(u => u.email === email && u.pass === pass);
 
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                let p2 = particles[j];
-                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if (dist < 150) {
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                }
+        if (user) {
+            if(user.isBanned) {
+                alert("Hesabınız admin tərəfindən bloklanıb!");
+                return;
             }
-        });
-        requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', init);
-    init();
-    draw();
-
-    function show(id) {
-        document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-    }
-
-    function validate() {
-        const p1 = document.getElementById('p1').value;
-        const p2 = document.getElementById('p2').value;
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if(!regex.test(p1)) alert("Şifrə zəifdir!");
-        else if(p1 !== p2) alert("Şifrələr uyğun deyil!");
-        else alert("Xoş gəldiniz!");
+            localStorage.setItem("current_user", JSON.stringify(user));
+            window.location.href = "dashboard.html";
+        } else {
+            err.style.display = "block";
+        }
     }
 </script>
+
 </body>
 </html>
