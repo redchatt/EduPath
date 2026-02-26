@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduHub | Giriş və Qeydiyyat</title>
+    <style>
+        /* Sadə və xoş görünüş üçün CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #333; margin-bottom: 1.5rem; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #5a3782; }
+        .links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        .links a { color: #764ba2; text-decoration: none; }
+        .links a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="login-form">
+    <h2>Xoş Gəlmisiniz!</h2>
+    <p>Təhsil portalına giriş edin</p>
+    <input type="email" placeholder="E-poçt ünvanı" required>
+    <input type="password" placeholder="Şifrə" required>
+    <button onclick="alert('Giriş cəhdi edildi...')">Daxil Ol</button>
+    
+    <div class="links">
+        <a href="#" onclick="toggleForm('forgot')">Şifrəni unutmusan?</a>
+        <a href="#" onclick="toggleForm('register')">Qeydiyyatdan keç</a>
+    </div>
+</div>
+
+<div class="container hidden" id="register-form">
+    <h2>Qeydiyyat</h2>
+    <input type="text" placeholder="Ad və Soyad">
+    <input type="email" placeholder="E-poçt ünvanı">
+    <input type="password" placeholder="Şifrə yaradın">
+    <button onclick="alert('Qeydiyyat uğurludur!')">Hesab Yarat</button>
+    <div class="links">
+        <a href="#" onclick="toggleForm('login')">Artıq hesabın var? Giriş et</a>
+    </div>
+</div>
+
+<div class="container hidden" id="forgot-form">
+    <h2>Şifrəni Bərpa Et</h2>
+    <p>E-poçtunuzu yazın, sizə link göndərək.</p>
+    <input type="email" placeholder="E-poçt ünvanı">
+    <button onclick="alert('E-poçt göndərildi!')">Göndər</button>
+    <div class="links">
+        <a href="#" onclick="toggleForm('login')">Geri qayıt</a>
+    </div>
+</div>
+
+<script>
+    function toggleForm(formType) {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('forgot-form').classList.add('hidden');
+
+        if(formType === 'login') {
+            document.getElementById('login-form').classList.remove('hidden');
+        } else if(formType === 'register') {
+            document.getElementById('register-form').classList.remove('hidden');
+        } else if(formType === 'forgot') {
+            document.getElementById('forgot-form').classList.remove('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>
