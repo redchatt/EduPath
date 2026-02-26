@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>EduPath | Admin Login</title>
+    <style>
+        body { background: #020617; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .login-card { background: #1e293b; padding: 40px; border-radius: 20px; box-shadow: 0 0 50px rgba(56, 189, 248, 0.2); width: 350px; text-align: center; border: 1px solid rgba(56, 189, 248, 0.1); }
+        h2 { color: #38bdf8; margin-bottom: 25px; letter-spacing: 2px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background: #38bdf8; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #0ea5e9; transform: translateY(-2px); }
+        .err { color: #ef4444; font-size: 13px; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>ADMIN GİRİŞ</h2>
+        <input type="text" id="u" placeholder="Admin Adı">
+        <input type="password" id="p" placeholder="Şifrə">
+        <button onclick="login()">Sistemə Daxil Ol</button>
+        <p id="msg" class="err">Məlumatlar yanlışdır!</p>
+    </div>
+    <script>
+        function login() {
+            if(document.getElementById('u').value === "Escobar" && document.getElementById('p').value === "1990") {
+                localStorage.setItem("escobar_auth", "true");
+                window.location.href = "admin.html";
+            } else { document.getElementById('msg').style.display = "block"; }
+        }
+    </script>
+</body>
+</html>
