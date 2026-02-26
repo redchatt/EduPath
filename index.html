@@ -3,171 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPortal | Bilik Dünyası</title>
+    <title>EduPro | Gələcəyini Qur</title>
     <style>
+        :root {
+            --primary: #4e54c8;
+            --secondary: #ff416c;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
-            color: white;
+            color: #fff;
         }
 
-        /* Arxa fonda kitab animasiyası */
-        .background-animation {
+        /* Kitab Animasiyası Sahəsi */
+        .area {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .books {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            overflow: hidden;
         }
 
-        .book {
+        .books li {
             position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
             font-size: 30px;
-            color: rgba(255, 255, 255, 0.1);
-            animation: float 10s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 420px;
             text-align: center;
-            color: #333;
-            z-index: 1;
         }
 
-        h2 { color: #0f3460; margin-bottom: 0.5rem; }
-        .info-text { font-size: 14px; color: #666; margin-bottom: 1.5rem; line-height: 1.4; }
-        
-        .promo-box {
-            background: #f0f4f8;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            border-left: 4px solid #e94560;
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
         }
+
+        /* Form Dizaynı */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            text-align: center;
+        }
+
+        .promo-section {
+            background: rgba(255, 65, 108, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        h2 { margin-bottom: 10px; font-weight: 600; letter-spacing: 1px; }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
             box-sizing: border-box;
         }
 
-        button {
+        input::placeholder { color: #ddd; }
+
+        .btn {
             width: 100%;
-            padding: 14px;
-            background-color: #e94560;
-            color: white;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+            border-radius: 25px;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
             font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
-        button:hover { background-color: #c62a48; transform: translateY(-2px); }
-        .links { margin-top: 1.2rem; display: flex; justify-content: space-between; font-size: 14px; }
-        .links a { color: #0f3460; text-decoration: none; font-weight: 600; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4); }
+
+        .links { margin-top: 20px; font-size: 13px; display: flex; justify-content: space-between; }
+        .links a { color: #00d2ff; text-decoration: none; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
-<div class="background-animation" id="bg"></div>
+<div class="area">
+    <ul class="books" id="book-list"></ul>
+</div>
 
-<div class="container" id="login-form">
-    <h2>Bilik Dünyasına Addım At</h2>
-    <div class="info-text">Öyrənmək heç vaxt bu qədər maraqlı olmamışdı!</div>
-    
-    <div class="promo-box">
-        🚀 <b>Nələr var?</b> Pulsuz sınaqlar, mükafatlı turnirlər və hər həftə yeni master-klasslar!
+<div class="glass-card" id="login-box">
+    <h2>Bilik Dünyası</h2>
+    <div class="promo-section">
+        🏆 <b>Hər Ay Mükafatlı Turnir!</b><br>
+        Sınaqlarda iştirak et, hədiyyələr qazan.
     </div>
-
-    <input type="email" placeholder="E-poçt ünvanı" required>
-    <input type="password" placeholder="Şifrə" required>
-    <button onclick="alert('Giriş edilir...')">Daxil Ol</button>
+    
+    <input type="email" placeholder="E-poçt">
+    <input type="password" placeholder="Şifrə">
+    <button class="btn">Daxil Ol</button>
     
     <div class="links">
-        <a href="#" onclick="toggleForm('forgot')">Şifrəni unutmusan?</a>
-        <a href="#" onclick="toggleForm('register')">Hesab yarat</a>
+        <a href="#" onclick="show('forgot-box')">Şifrəmi unutdum</a>
+        <a href="#" onclick="show('reg-box')">Qeydiyyat</a>
     </div>
 </div>
 
-<div class="container hidden" id="register-form">
-    <h2>Yeni Hesab</h2>
-    <p class="info-text">8 simvoldan ibarət güclü şifrə seçin.</p>
-    <input type="text" placeholder="Ad və Soyad">
-    <input type="email" placeholder="E-poçt ünvanı">
-    <input type="password" id="reg-pass" placeholder="Şifrə (Min. 8 simvol: a-Z, 1-9, @)">
-    <input type="password" id="reg-pass-again" placeholder="Şifrəni təkrarla">
-    <button onclick="checkRegister()">Qeydiyyatı Tamamla</button>
+<div class="glass-card hidden" id="reg-box">
+    <h2>Qeydiyyat</h2>
+    <input type="text" placeholder="Ad Soyad">
+    <input type="email" placeholder="E-poçt">
+    <input type="password" id="p1" placeholder="Şifrə (Min. 8 simvol)">
+    <input type="password" id="p2" placeholder="Şifrəni təkrarla">
+    <button class="btn" onclick="validate()">Hesabımı Yarat</button>
     <div class="links">
-        <a href="#" onclick="toggleForm('login')">Geri qayıt</a>
+        <a href="#" onclick="show('login-box')">Geri qayıt</a>
     </div>
 </div>
 
-<div class="container hidden" id="forgot-form">
+<div class="glass-card hidden" id="forgot-box">
     <h2>Şifrə Bərpası</h2>
-    <p class="info-text">E-poçtunuzu daxil edin, sizə bərpa kodu göndərək.</p>
-    <input type="email" placeholder="E-poçt ünvanı">
-    <button onclick="alert('Kod göndərildi!')">Kodu Göndər</button>
+    <p style="font-size: 14px;">E-poçtunuzu daxil edin.</p>
+    <input type="email" placeholder="E-poçt">
+    <button class="btn">Link Göndər</button>
     <div class="links">
-        <a href="#" onclick="toggleForm('login')">Geri qayıt</a>
+        <a href="#" onclick="show('login-box')">Geri qayıt</a>
     </div>
 </div>
 
 <script>
-    // Arxa fonda uçan kitablar yaratmaq
-    const bg = document.getElementById('bg');
-    const icons = ['📖', '📚', '🎓', '✏️', '💡'];
-    for (let i = 0; i < 20; i++) {
-        let div = document.createElement('div');
-        div.className = 'book';
-        div.innerText = icons[Math.floor(Math.random() * icons.length)];
-        div.style.left = Math.random() * 100 + 'vw';
-        div.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        div.style.delay = Math.random() * 5 + 's';
-        bg.appendChild(div);
+    // Animasiyalı kitabların yaradılması
+    const list = document.getElementById('book-list');
+    const icons = ['📖', '📚', '🎓', '📝', '💡'];
+    for (let i = 0; i < 10; i++) {
+        let li = document.createElement('li');
+        li.innerText = icons[Math.floor(Math.random() * icons.length)];
+        li.style.left = Math.random() * 100 + "%";
+        li.style.width = li.style.height = Math.floor(Math.random() * 40 + 20) + "px";
+        li.style.animationDelay = Math.random() * 15 + "s";
+        li.style.animationDuration = Math.random() * 20 + 10 + "s";
+        list.appendChild(li);
     }
 
-    function toggleForm(formType) {
-        document.getElementById('login-form').classList.add('hidden');
-        document.getElementById('register-form').classList.add('hidden');
-        document.getElementById('forgot-form').classList.add('hidden');
-        document.getElementById(formType + '-form').classList.remove('hidden');
+    function show(id) {
+        document.getElementById('login-box').classList.add('hidden');
+        document.getElementById('reg-box').classList.add('hidden');
+        document.getElementById('forgot-box').classList.add('hidden');
+        document.getElementById(id).classList.remove('hidden');
     }
 
-    function checkRegister() {
-        const pass = document.getElementById('reg-pass').value;
-        const passAgain = document.getElementById('reg-pass-again').value;
+    function validate() {
+        const p1 = document.getElementById('p1').value;
+        const p2 = document.getElementById('p2').value;
+        // Regex: Min 8 simvol, 1 Böyük hərf, 1 rəqəm, 1 simvol
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-        if (!regex.test(pass)) {
-            alert("Şifrə ən az 8 simvol olmalı, böyük-kiçik hərf, rəqəm və simvol daxil edilməlidir!");
-        } else if (pass !== passAgain) {
-            alert("Şifrələr bir-biri ilə eyni deyil!");
+        if(!regex.test(p1)) {
+            alert("Şifrə ən az 8 simvol olmalı, böyük hərf, rəqəm və simvol (@$!%*?&) daxil edilməlidir!");
+        } else if(p1 !== p2) {
+            alert("Şifrələr eyni deyil!");
         } else {
-            alert("Təbriklər! Qeydiyyat uğurla tamamlandı.");
+            alert("Qeydiyyat uğurla tamamlandı!");
         }
     }
 </script>
