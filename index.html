@@ -3,107 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduHub | Giriş və Qeydiyyat</title>
+    <title>EduPortal | Bilik Dünyası</title>
     <style>
-        /* Sadə və xoş görünüş üçün CSS */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1a2e;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+            color: white;
         }
+
+        /* Arxa fonda kitab animasiyası */
+        .background-animation {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+        }
+
+        .book {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
         .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            color: #333;
+            z-index: 1;
         }
-        h2 { color: #333; margin-bottom: 1.5rem; }
+
+        h2 { color: #0f3460; margin-bottom: 0.5rem; }
+        .info-text { font-size: 14px; color: #666; margin-bottom: 1.5rem; line-height: 1.4; }
+        
+        .promo-box {
+            background: #f0f4f8;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            border-left: 4px solid #e94560;
+        }
+
         input {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
             box-sizing: border-box;
         }
+
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #764ba2;
+            padding: 14px;
+            background-color: #e94560;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
             transition: 0.3s;
+            margin-top: 10px;
         }
-        button:hover { background-color: #5a3782; }
-        .links {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-        }
-        .links a { color: #764ba2; text-decoration: none; }
-        .links a:hover { text-decoration: underline; }
+
+        button:hover { background-color: #c62a48; transform: translateY(-2px); }
+        .links { margin-top: 1.2rem; display: flex; justify-content: space-between; font-size: 14px; }
+        .links a { color: #0f3460; text-decoration: none; font-weight: 600; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
+<div class="background-animation" id="bg"></div>
+
 <div class="container" id="login-form">
-    <h2>Xoş Gəlmisiniz!</h2>
-    <p>Təhsil portalına giriş edin</p>
+    <h2>Bilik Dünyasına Addım At</h2>
+    <div class="info-text">Öyrənmək heç vaxt bu qədər maraqlı olmamışdı!</div>
+    
+    <div class="promo-box">
+        🚀 <b>Nələr var?</b> Pulsuz sınaqlar, mükafatlı turnirlər və hər həftə yeni master-klasslar!
+    </div>
+
     <input type="email" placeholder="E-poçt ünvanı" required>
     <input type="password" placeholder="Şifrə" required>
-    <button onclick="alert('Giriş cəhdi edildi...')">Daxil Ol</button>
+    <button onclick="alert('Giriş edilir...')">Daxil Ol</button>
     
     <div class="links">
         <a href="#" onclick="toggleForm('forgot')">Şifrəni unutmusan?</a>
-        <a href="#" onclick="toggleForm('register')">Qeydiyyatdan keç</a>
+        <a href="#" onclick="toggleForm('register')">Hesab yarat</a>
     </div>
 </div>
 
 <div class="container hidden" id="register-form">
-    <h2>Qeydiyyat</h2>
+    <h2>Yeni Hesab</h2>
+    <p class="info-text">8 simvoldan ibarət güclü şifrə seçin.</p>
     <input type="text" placeholder="Ad və Soyad">
     <input type="email" placeholder="E-poçt ünvanı">
-    <input type="password" placeholder="Şifrə yaradın">
-    <button onclick="alert('Qeydiyyat uğurludur!')">Hesab Yarat</button>
+    <input type="password" id="reg-pass" placeholder="Şifrə (Min. 8 simvol: a-Z, 1-9, @)">
+    <input type="password" id="reg-pass-again" placeholder="Şifrəni təkrarla">
+    <button onclick="checkRegister()">Qeydiyyatı Tamamla</button>
     <div class="links">
-        <a href="#" onclick="toggleForm('login')">Artıq hesabın var? Giriş et</a>
+        <a href="#" onclick="toggleForm('login')">Geri qayıt</a>
     </div>
 </div>
 
 <div class="container hidden" id="forgot-form">
-    <h2>Şifrəni Bərpa Et</h2>
-    <p>E-poçtunuzu yazın, sizə link göndərək.</p>
+    <h2>Şifrə Bərpası</h2>
+    <p class="info-text">E-poçtunuzu daxil edin, sizə bərpa kodu göndərək.</p>
     <input type="email" placeholder="E-poçt ünvanı">
-    <button onclick="alert('E-poçt göndərildi!')">Göndər</button>
+    <button onclick="alert('Kod göndərildi!')">Kodu Göndər</button>
     <div class="links">
         <a href="#" onclick="toggleForm('login')">Geri qayıt</a>
     </div>
 </div>
 
 <script>
+    // Arxa fonda uçan kitablar yaratmaq
+    const bg = document.getElementById('bg');
+    const icons = ['📖', '📚', '🎓', '✏️', '💡'];
+    for (let i = 0; i < 20; i++) {
+        let div = document.createElement('div');
+        div.className = 'book';
+        div.innerText = icons[Math.floor(Math.random() * icons.length)];
+        div.style.left = Math.random() * 100 + 'vw';
+        div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        div.style.delay = Math.random() * 5 + 's';
+        bg.appendChild(div);
+    }
+
     function toggleForm(formType) {
         document.getElementById('login-form').classList.add('hidden');
         document.getElementById('register-form').classList.add('hidden');
         document.getElementById('forgot-form').classList.add('hidden');
+        document.getElementById(formType + '-form').classList.remove('hidden');
+    }
 
-        if(formType === 'login') {
-            document.getElementById('login-form').classList.remove('hidden');
-        } else if(formType === 'register') {
-            document.getElementById('register-form').classList.remove('hidden');
-        } else if(formType === 'forgot') {
-            document.getElementById('forgot-form').classList.remove('hidden');
+    function checkRegister() {
+        const pass = document.getElementById('reg-pass').value;
+        const passAgain = document.getElementById('reg-pass-again').value;
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!regex.test(pass)) {
+            alert("Şifrə ən az 8 simvol olmalı, böyük-kiçik hərf, rəqəm və simvol daxil edilməlidir!");
+        } else if (pass !== passAgain) {
+            alert("Şifrələr bir-biri ilə eyni deyil!");
+        } else {
+            alert("Təbriklər! Qeydiyyat uğurla tamamlandı.");
         }
     }
 </script>
